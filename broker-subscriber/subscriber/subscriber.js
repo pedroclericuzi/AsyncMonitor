@@ -1,16 +1,26 @@
-const { Observable, Subject, ReplaySubject, from, fromArray, of, timer, distinct } = require('rxjs');
-const { map, filter, switchMap, reduce, scan, distinctUntilChanged } = require('rxjs/operators');
+const { Observable, Subject, ReplaySubject, from, interval, of, timer } = require('rxjs');
+const { map, filter, switchMap, reduce, combineLatest } = require('rxjs/operators');
 const mqtt = require('mqtt');
+const dbfirebase = require('./dbFirebase.js');
 //const client = mqtt.connect('mqtt://192.168.0.15:3000');
 const client = mqtt.connect('mqtt://192.168.0.9:3000');
 var valorReal = 0;
+var diaLeitura;
+var mesLeitura;
+var meta;
 
-var diaLeitura = 31;
-var mesLeitura = 5;
-var meta = 0.1;
+dbfirebase.getDefinicoesEnergia();
 client.on('connect', () => {
     console.log('connected');
     client.subscribe("energia");
+
+	interval(3000).subscribe(val => {
+		var getDefinicoes = dbfirebase.getDefinicoesEnergia();
+		diaLeitura = getDefinicoes.dia;
+		mesLeitura = getDefinicoes.mes;
+		meta = getDefinicoes.meta;
+	});
+
 	//var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
 	//var firstDate = new Date(2008,01,12);
 	//var secondDate = new Date(2008,01,22);
@@ -23,34 +33,39 @@ client.on('connect', () => {
 
 client.on('message', (topico, messagem) => {
 	//console.log('received message %s %s', topic, message)
-	read(messagem, meta, diaLeitura);
+	if(meta!='undefined'){
+		read(messagem);
+	}
 })
 
-function read(value, meta, diaLeitura){
-	var valueToArray = [value];
-	of(valueToArray)
+function read(value){
+	of([value])
 	.pipe(map(num => ((num / 1000) * 0.0013888888888889)*0.69))
 	.pipe(reduce((total,price) => total + price, valorReal))
 	.subscribe(dado => {
 			valorReal = dado;
 			var d = new Date();
-			var mesAtual = d.getUTCMonth() + 1;
-			var hoje = d.getUTCDate();
-			var cmpDatas = [hoje+""+mesAtual, diaLeitura+""+mesLeitura];
-			const source = from(cmpDatas);
+			var idDtHoje = d.getUTCDate()+""+(d.getUTCMonth() + 1);
+			var idDtLeitura = diaLeitura+""+mesLeitura;
+			var cmpDatas = [idDtHoje, idDtLeitura];
 			if(cmpDatas[0] === cmpDatas[1]){
 				//Se o mes for igual, mudo a data aqui e mando pro banco
-				console.log(mesLeitura);
 				mesLeitura++;
+				dbfirebase.definicoesEnergia(diaLeitura, mesLeitura, meta);
+				dbfirebase.statusEnergia(0, 0, 0);
+				console.log("mes: "+mesLeitura);
 			} else {
 				var porcentagem = (valorReal * 100)/meta
 				if(porcentagem<80){ //evento disparado aqui
+					dbfirebase.statusEnergia(porcentagem, 0, valorReal);
 					console.log("valorReal < 80% = " + porcentagem);// + " - " +  "porcentagem: " + porcentagem);
 				}
 				if(porcentagem>=80 && porcentagem<100){ //evento disparado aqui
+					dbfirebase.statusEnergia(porcentagem, 1, valorReal);
 					console.log("valorReal entre 80% = " + porcentagem);
 				}
 				if(porcentagem>=100){ //evento disparado aqui
+					dbfirebase.statusEnergia(porcentagem, 2, valorReal);
 					console.log("valorReal igual ou acima de 100% = " + porcentagem);
 				}
 			}
