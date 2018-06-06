@@ -36,10 +36,10 @@ exports.getDefinicoesEnergia = function(){
     leitura = snapshot.val();
   });
 
-  /*var starCountRef = firebase.database().ref('energia/definicoes/');
+  var starCountRef = firebase.database().ref('energia/definicoes/');
   fromEvent(starCountRef, 'value').subscribe(function (snap) {
     leitura = snap.val();
-  });*/
+  });
 
   return leitura;
 }

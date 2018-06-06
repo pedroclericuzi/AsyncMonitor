@@ -20,13 +20,13 @@ const char* wifi_password = "pedronat";
 
 // MQTT
 // Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.0.9";//"MQTT Broker IP Address";
-//const char* mqtt_server = "192.168.56.1";//"MQTT Broker IP Address";
+const char* mqtt_server = "192.168.0.11";//"MQTT Broker IP Address";
+//const char* mqtt_server = "192.168.0.4";//"MQTT Broker IP Address";
 const char* mqtt_topic = "energia";
-//const char* mqtt_username = "pi";
-//const char* mqtt_password = "raspberry";
-const char* mqtt_username = "PEDRO";
-const char* mqtt_password = "";
+const char* mqtt_username = "pi";
+const char* mqtt_password = "raspberry";
+//const char* mqtt_username = "PEDRO";
+//const char* mqtt_password = "eremcd123";
 // The client id identifies the ESP8266 device. Think of it a bit like a hostname (Or just a name, like Greg).
 const char* clientID = "04061995";
 
@@ -34,7 +34,7 @@ long randNumber;
 
 // Initialise the WiFi and MQTT Client objects
 WiFiClient wifiClient;
-PubSubClient client(mqtt_server, 3000, wifiClient); // 1883 is the listener port for the Broker
+PubSubClient client(mqtt_server, 3001, wifiClient); // 1883 is the listener port for the Broker
 
 void setup() {
   Serial.begin(115200);
@@ -68,7 +68,6 @@ void setup() {
   else {
     Serial.println("Connection to MQTT Broker failed...");
   }
-  
 }
 
 void loop() {
@@ -84,13 +83,7 @@ void loop() {
     
     String SerialData="";
     SerialData = String(potencia);
-    Serial.print("String: ");
-    Serial.println(SerialData);
-    Serial.println("...");
     const char* pot = SerialData.c_str();
-    Serial.print("Char: ");
-    Serial.println(pot);
-    Serial.println("...");
     //const char* pot[8];//String(getPotencia());
     //sprintf(pot, "%d", potencia);
     
@@ -107,6 +100,5 @@ void loop() {
       delay(10); // This delay ensures that client.publish doesn't clash with the client.connect call
       client.publish(mqtt_topic, pot);
     }
-    delay(5000);
+    delay(1000);
 }
-
