@@ -83,7 +83,7 @@ function readWater(messagem){
 
 }
 
-function readEnergy(value){
+function readEnergy_Funcional(value){
 	var kwh = (value / 1000) * 0.00027778;
 	var preco = kwh * 0.69;
 	valorReal = valorReal + preco;
@@ -111,8 +111,4 @@ function readEnergy(value){
 			console.log("valorReal igual ou acima de 100% = " + porcentagem);
 		}
 	}
-}
-
-function readWater(value) {
-	console.log("Valor " + value);
 }
