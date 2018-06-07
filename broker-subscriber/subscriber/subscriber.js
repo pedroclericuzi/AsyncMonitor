@@ -3,7 +3,7 @@ const { map, filter, switchMap, reduce, combineLatest } = require('rxjs/operator
 const mqtt = require('mqtt');
 const dbfirebase = require('./dbFirebase.js');
 //const client = mqtt.connect('mqtt://192.168.0.15:3000');
-const client = mqtt.connect('mqtt://192.168.0.4:3000');
+const client = mqtt.connect('mqtt://192.168.0.11:3001');
 var valorReal = 0;
 var diaLeitura;
 var mesLeitura;
@@ -13,7 +13,7 @@ dbfirebase.getDefinicoesEnergia();
 client.on('connect', () => {
     console.log('connected');
     client.subscribe("energia");
-	client.subscribe("agua");
+    client.subscribe("agua");
 
 	interval(3000).subscribe(val => {
 		var getDefinicoes = dbfirebase.getDefinicoesEnergia();
@@ -49,15 +49,16 @@ function readEnergy(value){
 	.subscribe(dado => {
 			valorReal = dado;
 			var d = new Date();
-			var idDtHoje = d.getUTCDate()+""+(d.getUTCMonth() + 1);
+			var idDtHoje = d.getDate()+""+(d.getMonth() + 1);
 			var idDtLeitura = diaLeitura+""+mesLeitura;
 			var cmpDatas = [idDtHoje, idDtLeitura];
+			
 			if(cmpDatas[0] === cmpDatas[1]){
 				//Se o mes for igual, mudo a data aqui e mando pro banco
-				mesLeitura = (mesLeitura+1)%12 + 1;
-				valorReal = 0;
+				mesLeitura = (mesLeitura%12) + 1;
 				dbfirebase.definicoesEnergia(diaLeitura, mesLeitura, meta);
 				dbfirebase.statusEnergia(0, 0, 0);
+				valorReal = 0;
 				console.log("mes: "+mesLeitura);
 			} else {
 				var porcentagem = (valorReal * 100)/meta
