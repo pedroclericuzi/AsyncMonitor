@@ -7,8 +7,8 @@
 #include <PubSubClient.h> // Allows us to connect to, and publish to the MQTT broker
 
 //água
-float vazao; //Variável para armazenar o valor em L/min
-float media=0; //Variável para tirar a média a cada 1 minuto
+double vazao; //Variável para armazenar o valor em L/min
+double media=0; //Variável para tirar a média a cada 1 minuto
 int contaPulso; //Variável para a quantidade de pulsos
 int i=0; //Variável para contagem
 int pinSCT = D2; 
@@ -65,14 +65,10 @@ void setup() {
   } 
 }
 void loop() {
-  pubAgua();
-}
-void pubAgua(){
   contaPulso = 0;   //Zera a variável para contar os giros por segundos
   sei();      //Habilita interrupção
   delay (1000); //Aguarda 1 segundo
   cli();      //Desabilita interrupção
-  
   vazao = contaPulso / 5.5; //Converte para L/min
   media=media+vazao; //Soma a vazão para o calculo da media
   i++;
@@ -91,10 +87,9 @@ void pubAgua(){
     String SerialData="";
     SerialData = String(media);
     const char* fluxo = SerialData.c_str();
-    // PUBLISH to the MQTT Broker (topic = mqtt_topic_energy, defined at the beginning)
-    // Here, "Button pressed!" is the Payload, but this could be changed to a sensor reading, for example.
+    // PUBLISH to the MQTT Broker (topic = mqtt_topic_water, defined at the beginning)
     if (client.publish(mqtt_topic_water, fluxo)) {
-      Serial.println("Valor da potencia enviado pro broken");
+      Serial.println("Media enviada pro broken");
     }
     // Again, client.publish will return a boolean value depending on whether it succeded or not.
     // If the message failed to send, we will try again, as the connection may have broken.
@@ -108,6 +103,9 @@ void pubAgua(){
     i=0; //Zera a variável i para uma nova contagem
     Serial.println("\n\nInicio\n\n");
   }
+}
+void pubAgua(){
+  
 }
 
 void inpulso (){ 
