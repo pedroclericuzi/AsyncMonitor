@@ -17,10 +17,17 @@ exports.statusEnergia = function(p, s, v){
   });
 }
 
+exports.statusAgua = function(l, s, v){
+  firebase.database().ref('agua/status/').set({
+    litros : l,
+    status : s,
+    valor : v
+  });
+}
+
 //Altera os dados cadastrados no dispositivo
-exports.definicoesEnergia = function(dia, mes, meta){
-  console.log("dia: "+dia+", mes: "+mes+", meta: "+meta);
-  firebase.database().ref('energia/definicoes/').set({
+exports.definicoes = function(dia, mes, meta, topico){
+  firebase.database().ref(''+topico+'/definicoes/').set({
     dia : dia,
     mes : mes,
     meta : meta
@@ -29,9 +36,9 @@ exports.definicoesEnergia = function(dia, mes, meta){
 
 
 //Recupera os dados cadastrados no dispositivo
-exports.getDefinicoesEnergia = function(){
+exports.getDefinicoes = function(topico){
   var leitura = {};
-  var starCountRef = firebase.database().ref('energia/definicoes/');
+  var starCountRef = firebase.database().ref(''+topico+'/definicoes/');
   starCountRef.on("value", function(snapshot) {
     leitura = snapshot.val();
   });

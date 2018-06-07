@@ -25,12 +25,8 @@ const char* mqtt_server = "192.168.0.11";//"MQTT Broker IP Address";
 const char* mqtt_topic_water = "agua";
 const char* mqtt_username = "pi";
 const char* mqtt_password = "raspberry";
-//const char* mqtt_username = "PEDRO";
-//const char* mqtt_password = "eremcd123";
 // The client id identifies the ESP8266 device. Think of it a bit like a hostname (Or just a name, like Greg).
 const char* clientID = "04061995";
-
-long randNumber;
 
 // Initialise the WiFi and MQTT Client objects
 WiFiClient wifiClient;
@@ -71,8 +67,6 @@ void setup() {
 void loop() {
   pubAgua();
 }
-
-
 void pubAgua(){
   contaPulso = 0;   //Zera a variável para contar os giros por segundos
   sei();      //Habilita interrupção
