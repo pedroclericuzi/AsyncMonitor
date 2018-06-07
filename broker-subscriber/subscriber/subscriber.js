@@ -43,6 +43,7 @@ client.on('message', (topico, messagem) => {
 	}
 	if(metaAgua!='undefined' && topico == "agua"){
 		var msg = parseFloat(messagem);
+		console.log("soma: " + (msg+1));
 		readWater(msg);
 	}
 })
