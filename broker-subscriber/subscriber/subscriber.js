@@ -58,12 +58,15 @@ function readWater(messagem){
 	.pipe(reduce((total,price) => total + price, litros))
 	.subscribe(dado => {
 		litros = dado;
+		console.log("litros: "+litros);
 		if(cmpData (diaLeituraEnergia, mesLeituraEnergia)===true){
+			console.log("data igual");
 			mesLeituraAgua = (mesLeituraAgua%12) + 1;
 			dbfirebase.definicoes(diaLeituraAgua, mesLeituraAgua, metaAgua,'agua');
 			dbfirebase.statusAgua(0, 0, 0);
 			litros = 0;
 		} else {
+			console.log("datas diferentes");
 			if(litros<=10000){
 				dbfirebase.statusAgua(litros,0,41.3);
 			} else if(litros>10000 && litros<=20000){
