@@ -41,7 +41,7 @@ client.on('message', (topico, messagem) => {
 	if(metaEnergia!='undefined' && topico == "energia"){
 		readEnergy(messagem);
 	}
-	if(meta!='undefined' && topico == "agua"){
+	if(metaAgua!='undefined' && topico == "agua"){
 		readWater(messagem);
 	}
 })
