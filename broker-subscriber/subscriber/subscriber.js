@@ -42,7 +42,8 @@ client.on('message', (topico, messagem) => {
 		readEnergy(messagem);
 	}
 	if(metaAgua!='undefined' && topico == "agua"){
-		readWater(messagem);
+		var msg = parseFloat(messagem);
+		readWater(msg);
 	}
 })
 
@@ -53,11 +54,12 @@ Até 10.000 litros/mês 	41,30
 30.001 a 50.000 litros 	7,75
 50.001 a 90.000 litros 	9,18
 90.001 a 999999.000 litros 	17,65 */
-function readWater(messagem){
-	of([messagem])
+function readWater(msg){
+	of([msgs])
 	.pipe(reduce((total,price) => total + price, litros))
 	.subscribe(dado => {
 		litros = dado;
+		//console.log("bool litros " + typeof litros==='number');
 		console.log("litros: "+litros);
 		if(cmpData (diaLeituraEnergia, mesLeituraEnergia)===true){
 			console.log("data igual");
