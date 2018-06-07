@@ -59,7 +59,7 @@ function readWater(msg){
 	.pipe(reduce((total,price) => total + price, litros))
 	.subscribe(dado => {
 		litros = dado;
-		//console.log("bool litros " + typeof litros==='number');
+		console.log("bool litros " + typeof litros==='number');
 		console.log("litros: "+litros);
 		if(cmpData (diaLeituraEnergia, mesLeituraEnergia)===true){
 			console.log("data igual");
