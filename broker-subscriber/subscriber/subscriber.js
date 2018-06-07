@@ -57,9 +57,8 @@ Até 10.000 litros/mês 	41,30
 90.001 a 999999.000 litros 	17,65 */
 function readWater(msg){
 	of([msg])
-	.pipe(reduce((total,price) => total + price, litros))
 	.subscribe(dado => {
-		litros = dado;
+		litros = litros + dado;
 		console.log("bool litros " + typeof litros==='number');
 		console.log("litros: "+litros);
 		if(cmpData (diaLeituraEnergia, mesLeituraEnergia)===true){

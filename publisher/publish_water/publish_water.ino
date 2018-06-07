@@ -69,7 +69,7 @@ void loop() {
   sei();      //Habilita interrupção
   delay (1000); //Aguarda 1 segundo
   cli();      //Desabilita interrupção
-  vazao = contaPulso / 5.5; //Converte para L/min
+  vazao=contaPulso / 5.5; //Converte para L/min
   media=media+vazao; //Soma a vazão para o calculo da media
   i++;
   
