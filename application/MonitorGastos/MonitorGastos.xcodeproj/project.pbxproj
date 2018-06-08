@@ -22,7 +22,6 @@
 		9E4BC48220C5AAC500CF8AE0 /* MainClassWater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4BC48120C5AAC500CF8AE0 /* MainClassWater.swift */; };
 		9E4BC48420C5AAD700CF8AE0 /* SettingsWater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4BC48320C5AAD700CF8AE0 /* SettingsWater.swift */; };
 		9E4BC48620C5AD9A00CF8AE0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E4BC48520C5AD9900CF8AE0 /* GoogleService-Info.plist */; };
-		9EC17ADC20CA326900CDB730 /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC17ADB20CA326900CDB730 /* FirebaseDB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +62,6 @@
 		9E4BC48120C5AAC500CF8AE0 /* MainClassWater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainClassWater.swift; sourceTree = "<group>"; };
 		9E4BC48320C5AAD700CF8AE0 /* SettingsWater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWater.swift; sourceTree = "<group>"; };
 		9E4BC48520C5AD9900CF8AE0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		9EC17ADB20CA326900CDB730 /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		B19877DA75714296537687DC /* Pods_MonitorGastosUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonitorGastosUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7604D5A761D9E554D756DC8 /* Pods-MonitorGastos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonitorGastos.release.xcconfig"; path = "Pods/Target Support Files/Pods-MonitorGastos/Pods-MonitorGastos.release.xcconfig"; sourceTree = "<group>"; };
 		BB0B0190AFB5905326A3567F /* Pods-MonitorGastosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonitorGastosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MonitorGastosTests/Pods-MonitorGastosTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 			children = (
 				9E4BC47720C5AA2500CF8AE0 /* Controller */,
 				9E4BC47620C5AA1F00CF8AE0 /* View */,
-				9E4BC47520C5AA1500CF8AE0 /* Model */,
 				9E4BC44520C2802200CF8AE0 /* AppDelegate.swift */,
 				9E4BC44720C2802200CF8AE0 /* ViewController.swift */,
 				9E4BC44C20C2802400CF8AE0 /* Assets.xcassets */,
@@ -155,14 +152,6 @@
 				9E4BC46720C2802400CF8AE0 /* Info.plist */,
 			);
 			path = MonitorGastosUITests;
-			sourceTree = "<group>";
-		};
-		9E4BC47520C5AA1500CF8AE0 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				9EC17ADB20CA326900CDB730 /* FirebaseDB.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		9E4BC47620C5AA1F00CF8AE0 /* View */ = {
@@ -444,7 +433,6 @@
 				9E4BC48220C5AAC500CF8AE0 /* MainClassWater.swift in Sources */,
 				9E4BC44820C2802200CF8AE0 /* ViewController.swift in Sources */,
 				9E4BC44620C2802200CF8AE0 /* AppDelegate.swift in Sources */,
-				9EC17ADC20CA326900CDB730 /* FirebaseDB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
