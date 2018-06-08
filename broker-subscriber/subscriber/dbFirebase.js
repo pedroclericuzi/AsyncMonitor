@@ -1,6 +1,3 @@
-/*const { Observable, Subject, ReplaySubject, from, interval, of, timer, fromEvent } = require('rxjs');
-const { map, filter, switchMap, reduce, combineLatest } = require('rxjs/operators');*/
-
 const firebase = require('firebase-admin');
 const servicosConta = require("./serviceAccountKey.json");
 // Initialize Firebase
@@ -42,11 +39,5 @@ exports.getDefinicoes = function(topico){
   starCountRef.on("value", function(snapshot) {
     leitura = snapshot.val();
   });
-
-  /*var starCountRef = firebase.database().ref('energia/definicoes/');
-  fromEvent(starCountRef, 'value').subscribe(function (snap) {
-    leitura = snap.val();
-  });*/
-
   return leitura;
 }
