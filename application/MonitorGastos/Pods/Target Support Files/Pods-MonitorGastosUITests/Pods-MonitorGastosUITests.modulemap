@@ -1,0 +1,6 @@
+framework module Pods_MonitorGastosUITests {
+  umbrella header "Pods-MonitorGastosUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
