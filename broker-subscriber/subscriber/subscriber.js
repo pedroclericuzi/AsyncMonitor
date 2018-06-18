@@ -56,8 +56,7 @@ Até 10.000 litros/mês 	41,30
 90.001 a 999999.000 litros 	17,65 */
 function readWater(msg){
 	of([msg])
-	.pipe(map(num => console.log("num: " + (num+1))))
-	.pipe(reduce((total,price) => total + price, litros))
+	.pipe(reduce((total,price) => parseFloat(total) + parseFloat(price), litros))
 	.subscribe(dado => {
 		console.log("dado " + litros);
 		var msg = parseFloat(dado);
