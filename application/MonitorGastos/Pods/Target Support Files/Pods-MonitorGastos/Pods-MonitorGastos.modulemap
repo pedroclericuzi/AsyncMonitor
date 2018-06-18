@@ -1,0 +1,6 @@
+framework module Pods_MonitorGastos {
+  umbrella header "Pods-MonitorGastos-umbrella.h"
+
+  export *
+  module * { export * }
+}
