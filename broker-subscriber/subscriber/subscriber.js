@@ -43,7 +43,7 @@ client.on('message', (topico, messagem) => {
 		readEnergy(messagem);
 	}
 	if(metaAgua!='undefined' && topico == "agua"){
-		readWater(msg);
+		readWater(messagem);
 	}
 })
 
