@@ -43,7 +43,6 @@ client.on('message', (topico, messagem) => {
 		readEnergy(messagem);
 	}
 	if(metaAgua!='undefined' && topico == "agua"){
-		var msg = parseFloat(messagem);
 		readWater(msg);
 	}
 })
@@ -59,7 +58,8 @@ function readWater(msg){
 	of([msg]).pipe(map(num => num + 0))
 	.pipe(reduce((total,price) => total + price, litros))
 	.subscribe(dado => {
-		litros = dado;
+		var msg = parseFloat(dado);
+		litros = msg;
 		console.log("litros " + litros);
 		if(cmpData (diaLeituraAgua, mesLeituraAgua)===true){
 			console.log("data igual");
