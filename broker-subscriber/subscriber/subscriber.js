@@ -3,7 +3,7 @@ const { map, filter, reduce, take } = require('rxjs/operators');
 const mqtt = require('mqtt');
 const dbfirebase = require('./dbFirebase.js');
 //const client = mqtt.connect('mqtt://192.168.0.11:3001');
-const client = mqtt.connect('mqtt://192.168.0.4:3000');
+const client = mqtt.connect('mqtt://192.168.0.4:3001');
 
 //Definicoes de energia
 var diaLeituraEnergia;
@@ -56,10 +56,11 @@ Até 10.000 litros/mês 	41,30
 50.001 a 90.000 litros 	9,18
 90.001 a 999999.000 litros 	17,65 */
 function readWater(msg){
-	of([msg])
+	of([msg]).pipe(map(num => num + 0))
 	.pipe(reduce((total,price) => total + price, litros))
 	.subscribe(dado => {
 		litros = dado;
+		console.log("litros " + litros);
 		if(cmpData (diaLeituraAgua, mesLeituraAgua)===true){
 			console.log("data igual");
 			mesLeituraAgua = (mesLeituraAgua%12) + 1;
