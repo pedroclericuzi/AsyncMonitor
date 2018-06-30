@@ -16,4 +16,4 @@ Pedro Clericuzi, pvbc@cin.ufpe.br/pedro.vinicius.batista@gmail.com
 
 ## Agradecimentos
 
-AsyncMonitor foi desenvolvido como o projeto do Trabalho de Graduação no curso de Sistemas de Informação do Cin - UFPE. Agradeço a todos o corpo docente, sobretudo a meu orientador do projeto, o professor [Kiev Gama](http://cin.ufpe.br/~kiev/).
+AsyncMonitor foi desenvolvido como o projeto do Trabalho de Graduação no curso de Sistemas de Informação do Cin - UFPE. Agradeço a todos que fazem parte corpo docente, sobretudo a meu orientador do projeto, o professor [Kiev Gama](http://cin.ufpe.br/~kiev/).
