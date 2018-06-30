@@ -2,7 +2,6 @@ const { Observable, Subject, ReplaySubject, from, interval, of, timer } = requir
 const { map, filter, reduce, take } = require('rxjs/operators');
 const mqtt = require('mqtt');
 const dbfirebase = require('./dbFirebase.js');
-//const client = mqtt.connect('mqtt://192.168.0.11:3001');
 const client = mqtt.connect('mqtt://192.168.0.4:3001');
 
 //Definicoes de energia
@@ -18,7 +17,6 @@ var metaAgua;
 var litros = 0; //valor dos litros de agua utilizados
 var valorReal = 0; //valor em real do consumo atual de energia
 
-//dbfirebase.getDefinicoesEnergia();
 client.on('connect', () => {
     console.log('connected');
     client.subscribe("energia");
@@ -91,9 +89,10 @@ function readWater(msg){
 	});
 }
 
+//Valor da tarifa da distribuidora Celpe em junho de 2018 corresponde a 0.75
 function readEnergy(value){
 	of([value])
-	.pipe(map(num => ((num / 1000) * 0.00027778)*0.69))
+	.pipe(map(num => ((num / 1000) * 0.00027778)*0.75))
 	.pipe(reduce((total,price) => total + price, valorReal))
 	.subscribe(dado => {
 			valorReal = dado;
@@ -108,7 +107,7 @@ function readEnergy(value){
 				var porcentagem = (valorReal * 100)/metaEnergia;
 				if(porcentagem<80){
 					dbfirebase.statusEnergia(porcentagem, 0, valorReal);
-					console.log("valorReal < 80% = " + porcentagem);// + " - " +  "porcentagem: " + porcentagem);
+					console.log("valorReal < 80% = " + porcentagem);
 				}
 				if(porcentagem>=80 && porcentagem<100){ //evento disparado aqui
 					dbfirebase.statusEnergia(porcentagem, 1, valorReal);
@@ -129,7 +128,6 @@ function cmpData (diaLeitura, mesLeitura){
 	var idDtHoje = d.getDate()+""+(d.getMonth() + 1);
 	var idDtLeitura = diaLeitura+""+mesLeitura;
 	var cmpDatas = [idDtHoje, idDtLeitura];
-	//console.log("datas: "+idDtHoje+" - "+idDtLeitura);
 	if(cmpDatas[0] === cmpDatas[1]){
 		return true;
 	} else{
