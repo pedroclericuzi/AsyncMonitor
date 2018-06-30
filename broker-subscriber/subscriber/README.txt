@@ -1,1 +1,0 @@
-Vai receber os dados da corrente, vai tratar e enviar para um servidor na nuvem onde irá abastecer a aplicação final.

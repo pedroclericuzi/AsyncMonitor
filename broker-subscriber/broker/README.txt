@@ -1,1 +1,0 @@
-Nesta pasta contem o arquivo que vai funcionar como um brocker para o subscriber poder receber as informações que foram enviadas pelo ESP8266(pub).

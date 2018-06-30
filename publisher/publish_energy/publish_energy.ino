@@ -1,38 +1,30 @@
 /*
- * ESP8266 (Adafruit HUZZAH) Mosquitto MQTT Publish Example
- * Thomas Varnish (https://github.com/tvarnish), (https://www.instructables.com/member/Tango172)
- * Made as part of my MQTT Instructable - "How to use MQTT with the Raspberry Pi and ESP8266"
+ * http://www.instructables.com/id/How-to-Use-MQTT-With-the-Raspberry-Pi-and-ESP8266/#CNLP6YQJFUAGAUB
  */
-#include <ESP8266WiFi.h> // Enables the ESP8266 to connect to the local network (via WiFi)
-#include <PubSubClient.h> // Allows us to connect to, and publish to the MQTT broker
+#include <ESP8266WiFi.h> // Habilita que o ESP8266 se conecte ao WiFi
+#include <PubSubClient.h> // Biblioteca que habilita a publicação da mensagem no Broker
 #include "EmonLib.h"
 
-// Esp8266
 EnergyMonitor SCT013;
-int pinSCT = A0;   //Pino analógico conectado ao SCT-013
+int pinSCT = A0;  //Pino analógico conectado ao SCT-013
 int tensao = 127;
-//int potencia;
 
 // WiFi
-// Make sure to update this for your own WiFi network!
-const char* ssid = "Oi_Velox_WiFi_0C60";//"Your SSID";
-const char* wifi_password = "pedronat";
+const char* ssid = "Oi_Velox_WiFi_0C60";//O SSID da sua rede
+const char* wifi_password = "pedronat"; //sua senha
 
 // MQTT
-// Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.0.11";//"MQTT Broker IP Address";
-//const char* mqtt_server = "192.168.0.4";//"MQTT Broker IP Address";
+const char* mqtt_server = "192.168.0.11"; //Endereço de IP do Broker
 const char* mqtt_topic = "energia";
 const char* mqtt_username = "pi";
 const char* mqtt_password = "raspberry";
-// The client id identifies the ESP8266 device. Think of it a bit like a hostname (Or just a name, like Greg).
 const char* clientID = "04061995";
 
 long randNumber;
 
-// Initialise the WiFi and MQTT Client objects
+// Inicializa o WiFi e o publisher
 WiFiClient wifiClient;
-PubSubClient client(mqtt_server, 3001, wifiClient); // 1883 is the listener port for the Broker
+PubSubClient client(mqtt_server, 3001, wifiClient); // 3001 é a porta que será liberada para a comunicação
 
 void setup() {
   Serial.begin(115200);
@@ -40,10 +32,10 @@ void setup() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  // esp8266
+  // Calibra a leitura da corrente
   SCT013.current(pinSCT, 6.0606);
 
-  // Connect to the WiFi
+  // Conecta no WiFi
   WiFi.begin(ssid, wifi_password);
 
   // Wait until the connection has been confirmed before continuing
@@ -52,14 +44,13 @@ void setup() {
     Serial.print(".");
   }
 
-  // Debugging - Output the IP Address of the ESP8266
   Serial.println("WiFi connected");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
   // Connect to MQTT Broker
-  // client.connect returns a boolean value to let us know if the connection was successful.
-  // If the connection is failing, make sure you are using the correct MQTT Username and Password (Setup Earlier in the Instructable)
+  // client.connect retorna um boleano indicando o resultado da conexão.
+  // Se a conexão falhou, certifique-se que o SSID e o Password estao corretos
   if (client.connect(clientID, mqtt_username, mqtt_password)) {
     Serial.println("Connected to MQTT Broker!");
   }
@@ -82,8 +73,6 @@ void loop() {
     String SerialData="";
     SerialData = String(potencia);
     const char* pot = SerialData.c_str();
-    //const char* pot[8];//String(getPotencia());
-    //sprintf(pot, "%d", potencia);
     
     // PUBLISH to the MQTT Broker (topic = mqtt_topic, defined at the beginning)
     // Here, "Button pressed!" is the Payload, but this could be changed to a sensor reading, for example.

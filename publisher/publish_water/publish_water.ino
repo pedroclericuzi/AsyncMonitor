@@ -1,12 +1,9 @@
 /*
- * ESP8266 (Adafruit HUZZAH) Mosquitto MQTT Publish Example
- * Thomas Varnish (https://github.com/tvarnish), (https://www.instructables.com/member/Tango172)
- * Made as part of my MQTT Instructable - "How to use MQTT with the Raspberry Pi and ESP8266"
+ * http://www.instructables.com/id/How-to-Use-MQTT-With-the-Raspberry-Pi-and-ESP8266/#CNLP6YQJFUAGAUB
  */
-#include <ESP8266WiFi.h> // Enables the ESP8266 to connect to the local network (via WiFi)
+#include <ESP8266WiFi.h> // Habilita que o ESP8266 se conecte ao WiFi
 #include <PubSubClient.h> // Allows us to connect to, and publish to the MQTT broker
 
-//água
 double vazao; //Variável para armazenar o valor em L/min
 double media=0; //Variável para tirar a média a cada 1 minuto
 int contaPulso; //Variável para a quantidade de pulsos
@@ -14,23 +11,19 @@ int i=0; //Variável para contagem
 int pinSCT = D2; 
 
 // WiFi
-// Make sure to update this for your own WiFi network!
-const char* ssid = "Oi_Velox_WiFi_0C60";//"Your SSID";
-const char* wifi_password = "pedronat";
+const char* ssid = "Oi_Velox_WiFi_0C60";//O SSID da sua rede
+const char* wifi_password = "pedronat"; //sua senha
 
 // MQTT
-// Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.0.11";//"MQTT Broker IP Address";
-//const char* mqtt_server = "192.168.56.1";//"MQTT Broker IP Address";
-const char* mqtt_topic_water = "agua";
-const char* mqtt_username = "pi";
-const char* mqtt_password = "raspberry";
-// The client id identifies the ESP8266 device. Think of it a bit like a hostname (Or just a name, like Greg).
+const char* mqtt_server = "192.168.0.11"; //Endereço de IP do Broker
+const char* mqtt_topic_water = "agua"; //Topico
+const char* mqtt_username = "pi"; //Usuário do broker
+const char* mqtt_password = "raspberry"; //Senha do broker
 const char* clientID = "04061995";
 
-// Initialise the WiFi and MQTT Client objects
+// Inicializa o WiFi e o publisher
 WiFiClient wifiClient;
-PubSubClient client(mqtt_server, 3001, wifiClient); // 3001 is the listener port for the Broker
+PubSubClient client(mqtt_server, 3001, wifiClient); // 3001 é a porta que será liberada para a comunicação
 
 void setup() {
   Serial.begin(115200);
@@ -38,11 +31,11 @@ void setup() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  // água
+  // Habilita a leitura do fluxo de vazão de água no ESP8266
   pinMode(D2, INPUT);
   attachInterrupt(digitalPinToInterrupt(D2), inpulso, RISING);
 
-  // Connect to the WiFi
+  // Conecta no wifi
   WiFi.begin(ssid, wifi_password);
 
   // Wait until the connection has been confirmed before continuing
@@ -87,6 +80,7 @@ void loop() {
     String SerialData="";
     SerialData = String(media);
     const char* fluxo = SerialData.c_str();
+
     // PUBLISH to the MQTT Broker (topic = mqtt_topic_water, defined at the beginning)
     if (client.publish(mqtt_topic_water, fluxo)) {
       Serial.println("Media enviada pro broken");
@@ -103,9 +97,6 @@ void loop() {
     i=0; //Zera a variável i para uma nova contagem
     Serial.println("\n\nInicio\n\n");
   }
-}
-void pubAgua(){
-  
 }
 
 void inpulso (){ 
