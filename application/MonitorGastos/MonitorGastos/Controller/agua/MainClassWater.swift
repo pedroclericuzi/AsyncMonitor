@@ -50,7 +50,7 @@ class MainClassWater: UIViewController {
             let totalPorcent = porcent?.floatValue
             self.litro.text = ("\(String(format: "%.2f", totalPorcent!)) L")
             
-            self.tarEsgoto.text = ("\(String(format: "%.2f", totalValor!))%")
+            self.tarEsgoto.text = ("\(String(format: "%.2f", totalValor!))")
             
         })
     }
